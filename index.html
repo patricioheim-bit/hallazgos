@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hallazgos — Patricio</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f7f4ef;
+    color: #1a1a1a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: #1a1a1a;
+    color: #f7f4ef;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+  }
+  .header-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    margin-bottom: 0.8rem;
+  }
+  .header-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 2.4rem;
+    font-weight: normal;
+    letter-spacing: 0.08em;
+    color: #f7f4ef;
+    margin-bottom: 0.4rem;
+  }
+  .header-subtitle {
+    font-size: 0.78rem;
+    color: #666;
+    letter-spacing: 0.12em;
+  }
+  .header-date {
+    display: inline-block;
+    margin-top: 1.1rem;
+    background: rgba(201,168,76,0.12);
+    color: #c9a84c;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2px;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+
+  /* NAV */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #e2d9cc;
+    padding: 0 1rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 0.85rem 1.1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #aaa;
+    cursor: pointer;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    white-space: nowrap;
+    transition: all 0.18s;
+    font-family: inherit;
+  }
+  .nav-tab:hover { color: #444; }
+  .nav-tab.active { color: #1a1a1a; border-bottom-color: #c9a84c; font-weight: 600; }
+
+  /* MAIN */
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1.75rem 1rem 3rem;
+  }
+
+  /* EDITION NOTICE */
+  .edition-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: #9a7c2a;
+    background: #fdf6e3;
+    border: 1px solid #e8d49a;
+    border-radius: 4px;
+    padding: 0.65rem 1rem;
+    margin-bottom: 1.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-label-text {
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #aaa;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .section-label-line { flex: 1; height: 1px; background: #e2d9cc; }
+
+  /* CARD */
+  .card {
+    background: #fff;
+    border: 1px solid #e2d9cc;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-color: #cfc6b6; }
+
+  .card-stripe { height: 3px; }
+  .stripe-cine        { background: linear-gradient(90deg, #7a1515, #b02a2a); }
+  .stripe-consciencia { background: linear-gradient(90deg, #153a7a, #2568b0); }
+  .stripe-esoterismo  { background: linear-gradient(90deg, #4a1570, #7a35b0); }
+  .stripe-ia          { background: linear-gradient(90deg, #155c3a, #25a06a); }
+  .stripe-salvaje     { background: linear-gradient(90deg, #7a5c10, #c9a84c); }
+
+  .card-body { padding: 1.2rem 1.4rem 1.4rem; }
+
+  .card-meta {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #c0b8a8;
+    margin-bottom: 0.45rem;
+  }
+  .card-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.15rem;
+    font-weight: normal;
+    line-height: 1.35;
+    color: #1a1a1a;
+    margin-bottom: 0.35rem;
+  }
+  .card-author {
+    font-size: 0.78rem;
+    color: #999;
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+  .card-desc {
+    font-size: 0.87rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: 1.1rem;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .card-link {
+    display: inline-block;
+    padding: 0.38rem 0.85rem;
+    border: 1px solid #d8cebb;
+    color: #5c4a28;
+    text-decoration: none;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+    transition: all 0.18s;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .card-link:hover { background: #f5ede0; border-color: #c9a84c; color: #7a5c10; }
+  .card-tag {
+    margin-left: auto;
+    font-size: 0.65rem;
+    color: #c0b8a8;
+    font-style: italic;
+  }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 1.5rem 2rem 2rem;
+    color: #c0b8a8;
+    font-size: 0.68rem;
+    border-top: 1px solid #e2d9cc;
+    letter-spacing: 0.1em;
+    background: #fff;
+  }
+  footer span { color: #c9a84c; }
+
+  /* MOBILE */
+  @media (max-width: 580px) {
+    .header-title { font-size: 1.8rem; }
+    .card-title { font-size: 1rem; }
+    .card-body { padding: 1rem 1.1rem 1.2rem; }
+    .card-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Curación personal · Claude para Patricio</div>
+  <h1 class="header-title">Hallazgos</h1>
+  <div class="header-subtitle">Boletín semanal de material de referencia</div>
+  <div class="header-date">Semana del 24 de mayo, 2026</div>
+</header>
+
+<nav>
+  <button class="nav-tab active" onclick="showTab('todos', this)">Todos</button>
+  <button class="nav-tab" onclick="showTab('cine', this)">🎬 Cine</button>
+  <button class="nav-tab" onclick="showTab('consciencia', this)">🧠 Consciencia</button>
+  <button class="nav-tab" onclick="showTab('esoterismo', this)">🔮 Esoterismo</button>
+  <button class="nav-tab" onclick="showTab('ia', this)">⚡ IA &amp; Singularidad</button>
+  <button class="nav-tab" onclick="showTab('salvaje', this)">🎯 Hallazgo salvaje</button>
+</nav>
+
+<main>
+
+  <!-- TAB: TODOS -->
+  <div class="tab-panel active" id="tab-todos">
+
+    <div class="edition-notice">
+      ✦ &nbsp;Edición de prueba &nbsp;·&nbsp; 4 hallazgos &nbsp;·&nbsp; Próxima edición automática: viernes 29 mayo, 20:00
+    </div>
+
+    <div class="section-label">
+      <span class="section-label-text">🎬 Cine</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-stripe stripe-cine"></div>
+      <div class="card-body">
+        <div class="card-meta">Filmin · Estreno 29 mayo 2026</div>
+        <h2 class="card-title">Historias del buen valle</h2>
+        <div class="card-author">José Luis Guerín</div>
+        <p class="card-desc">Guerín es el documentalista español más cercano al cine-ensayo de Marker y Resnais: trabaja con tiempo, memoria y paisaje de una forma que no tiene nada que ver con el documental televisivo. Esta es su obra nueva y llega directamente a Filmin. El tipo de cine que no está en Netflix. Si no lo conoces, es un hallazgo real; si ya lo conoces, ya sabes.</p>
+        <div class="card-footer">
+          <a href="https://www.filmin.es" target="_blank" class="card-link">→ Filmin</a>
+          <span class="card-tag">Documental · Ensayo · España</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">
+      <span class="section-label-text">🧠 Consciencia</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-stripe stripe-consciencia"></div>
+      <div class="card-body">
+        <div class="card-meta">Frontiers in Human Neuroscience · 2025 · Acceso abierto</div>
+        <h2 class="card-title">The quantum-classical complexity of consciousness and orchestrated objective reduction</h2>
+        <div class="card-author">Paper académico — acceso libre</div>
+        <p class="card-desc">Examina Orch-OR frente a problemas concretos: percepción discreta del tiempo, binding espacio-temporal, libre albedrío causal. No es ataque ni defensa —intenta mapear dónde la teoría de Penrose-Hameroff explica y dónde no. En paralelo: el experimento bajo el Gran Sasso argumenta que la versión más simple de Orch-OR es "altamente implausible", pero los modelos de colapso más complejos siguen en disputa activa.</p>
+        <div class="card-footer">
+          <a href="https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2025.1630906/full" target="_blank" class="card-link">→ Paper (Frontiers)</a>
+          <a href="https://physicsworld.com/a/quantum-theory-of-consciousness-put-in-doubt-by-underground-experiment/" target="_blank" class="card-link">→ Gran Sasso (Physics World)</a>
+          <span class="card-tag">Orch-OR · Penrose-Hameroff</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">
+      <span class="section-label-text">🔮 Esoterismo académico</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-stripe stripe-esoterismo"></div>
+      <div class="card-body">
+        <div class="card-meta">Angela's Symposium · Marzo 2026 · Video + Substack</div>
+        <h2 class="card-title">Your Tradition is Fake. Now What?</h2>
+        <div class="card-author">Dra. Angela Puca</div>
+        <p class="card-desc">El título es provocador pero la aproximación es la de siempre: rigor crítico sobre la construcción histórica de las tradiciones esotéricas. Interesa especialmente si estás pensando en cómo se fabrica la legitimidad en el esoterismo —tema que conecta directo con Hanegraaff y su crítica al concepto de "tradición perenne". Disponible como video y como artículo.</p>
+        <div class="card-footer">
+          <a href="https://www.youtube.com/@drangelapuca/videos" target="_blank" class="card-link">→ YouTube</a>
+          <a href="https://drangelapuca.substack.com/p/your-tradition-is-fake-now-what" target="_blank" class="card-link">→ Substack</a>
+          <span class="card-tag">Tradiciones · Legitimidad esotérica</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">
+      <span class="section-label-text">🎯 Hallazgo salvaje</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-stripe stripe-salvaje"></div>
+      <div class="card-body">
+        <div class="card-meta">Podcast · Archivo disponible</div>
+        <h2 class="card-title">Singularity FM</h2>
+        <div class="card-author">Entrevistas: Stuart Hameroff · Vernor Vinge · Chomsky · Minsky · Kurzweil</div>
+        <p class="card-desc">El primer podcast del mundo sobre la singularidad tecnológica. El archivo tiene entrevistas con Stuart Hameroff (Orch-OR y sus implicaciones para la IA), Vernor Vinge (quien acuñó el término "singularidad tecnológica"), Marvin Minsky, Noam Chomsky. No es contenido nuevo pero es un archivo de alta densidad directamente relevante para SINCAI y para el debate sobre autoconciencia artificial.</p>
+        <div class="card-footer">
+          <a href="https://podcasts.apple.com/us/podcast/singularity-fm/id398887225" target="_blank" class="card-link">→ Apple Podcasts</a>
+          <a href="https://www.singularityweblog.com/podcasts/" target="_blank" class="card-link">→ Archivo web</a>
+          <span class="card-tag">Singularidad · IA · Consciencia · SINCAI</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-todos -->
+
+  <!-- TAB: CINE -->
+  <div class="tab-panel" id="tab-cine">
+    <div class="card" style="margin-top:0.5rem">
+      <div class="card-stripe stripe-cine"></div>
+      <div class="card-body">
+        <div class="card-meta">Filmin · Estreno 29 mayo 2026</div>
+        <h2 class="card-title">Historias del buen valle</h2>
+        <div class="card-author">José Luis Guerín</div>
+        <p class="card-desc">Guerín es el documentalista español más cercano al cine-ensayo de Marker y Resnais: trabaja con tiempo, memoria y paisaje de una forma que no tiene nada que ver con el documental televisivo. Esta es su obra nueva y llega directamente a Filmin.</p>
+        <div class="card-footer">
+          <a href="https://www.filmin.es" target="_blank" class="card-link">→ Filmin</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: CONSCIENCIA -->
+  <div class="tab-panel" id="tab-consciencia">
+    <div class="card" style="margin-top:0.5rem">
+      <div class="card-stripe stripe-consciencia"></div>
+      <div class="card-body">
+        <div class="card-meta">Frontiers in Human Neuroscience · 2025 · Acceso abierto</div>
+        <h2 class="card-title">The quantum-classical complexity of consciousness and orchestrated objective reduction</h2>
+        <div class="card-author">Paper académico — acceso libre</div>
+        <p class="card-desc">Examina Orch-OR frente a problemas concretos: percepción discreta del tiempo, binding espacio-temporal, libre albedrío causal. En paralelo: el experimento bajo el Gran Sasso argumenta que la versión más simple de Orch-OR es "altamente implausible", aunque los modelos de colapso más complejos siguen en disputa activa.</p>
+        <div class="card-footer">
+          <a href="https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2025.1630906/full" target="_blank" class="card-link">→ Paper (Frontiers)</a>
+          <a href="https://physicsworld.com/a/quantum-theory-of-consciousness-put-in-doubt-by-underground-experiment/" target="_blank" class="card-link">→ Gran Sasso</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: ESOTERISMO -->
+  <div class="tab-panel" id="tab-esoterismo">
+    <div class="card" style="margin-top:0.5rem">
+      <div class="card-stripe stripe-esoterismo"></div>
+      <div class="card-body">
+        <div class="card-meta">Angela's Symposium · Marzo 2026</div>
+        <h2 class="card-title">Your Tradition is Fake. Now What?</h2>
+        <div class="card-author">Dra. Angela Puca</div>
+        <p class="card-desc">Rigor crítico sobre la construcción histórica de las tradiciones esotéricas. Conecta con Hanegraaff y su crítica al concepto de "tradición perenne".</p>
+        <div class="card-footer">
+          <a href="https://www.youtube.com/@drangelapuca/videos" target="_blank" class="card-link">→ YouTube</a>
+          <a href="https://drangelapuca.substack.com/p/your-tradition-is-fake-now-what" target="_blank" class="card-link">→ Substack</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: IA -->
+  <div class="tab-panel" id="tab-ia">
+    <div class="card" style="margin-top:0.5rem">
+      <div class="card-stripe stripe-salvaje"></div>
+      <div class="card-body">
+        <div class="card-meta">Podcast · Archivo completo disponible</div>
+        <h2 class="card-title">Singularity FM — Episodios clave</h2>
+        <div class="card-author">Stuart Hameroff · Vernor Vinge · Chomsky · Minsky</div>
+        <p class="card-desc">Archivo del primer podcast sobre la singularidad. Los episodios con Hameroff conectan Orch-OR directamente con la posibilidad de IA consciente —material de investigación directo para SINCAI.</p>
+        <div class="card-footer">
+          <a href="https://www.singularityweblog.com/podcasts/" target="_blank" class="card-link">→ Archivo completo</a>
+          <a href="https://podcasts.apple.com/us/podcast/singularity-fm/id398887225" target="_blank" class="card-link">→ Apple Podcasts</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: SALVAJE -->
+  <div class="tab-panel" id="tab-salvaje">
+    <div class="card" style="margin-top:0.5rem">
+      <div class="card-stripe stripe-salvaje"></div>
+      <div class="card-body">
+        <div class="card-meta">Podcast · Archivo disponible</div>
+        <h2 class="card-title">Singularity FM</h2>
+        <div class="card-author">Entrevistas: Hameroff · Vinge · Chomsky · Minsky · Kurzweil</div>
+        <p class="card-desc">Archivo de alta densidad. El primer podcast sobre la singularidad tecnológica con entrevistas a los grandes del campo. Relevante para SINCAI y para el debate sobre autoconciencia artificial.</p>
+        <div class="card-footer">
+          <a href="https://podcasts.apple.com/us/podcast/singularity-fm/id398887225" target="_blank" class="card-link">→ Apple Podcasts</a>
+          <a href="https://www.singularityweblog.com/podcasts/" target="_blank" class="card-link">→ Web</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span>Hallazgos</span> &nbsp;·&nbsp; Curación personal para Patricio &nbsp;·&nbsp; Actualización automática cada viernes 20:00 &nbsp;·&nbsp; Claude / Cowork
+</footer>
+
+<script>
+  function showTab(tab, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
